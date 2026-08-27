@@ -4,7 +4,8 @@ import db from "../database.ts"
 const router = Router()
 
 router.get("/", (_req, res) => {
-  const users = db.prepare("SELECT * FROM users").all()
+  const users = db.prepare("SELECT id, username, email FROM users").all()
+
   res.json(users)
 })
 
@@ -12,7 +13,13 @@ router.get("/", (_req, res) => {
 router.get("/search", (req, res) => {
   const name = req.query.name
 
-  const users = db.prepare(`SELECT * FROM users WHERE username LIKE '%${name}%'`).all()
+  if (!name) {
+    return res.status(400).json({ error: "Name is required" })
+  }
+
+  const users = db
+    .prepare(`SELECT id, username, email FROM users WHERE username LIKE ?`)
+    .all(`'%${name}%'`)
 
   res.json(users)
 })

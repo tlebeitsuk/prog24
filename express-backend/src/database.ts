@@ -13,8 +13,7 @@ db.exec(`
 
 // Seed db
 db.exec(`
-  INSERT OR IGNORE INTO users (username, email, password)
-  VALUES
+  INSERT OR IGNORE INTO users (username, email, password) VALUES
     ('lisa', 'lisa@example.com', 'password123'),
     ('niklas', 'niklas@example.com', 'secret'),
     ('bertlis', 'bertlis@example.com', 'qwerty'),

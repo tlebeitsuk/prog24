@@ -1,4 +1,5 @@
 import { Router } from "express"
+import bcrypt from "bcrypt"
 import db from "../database.ts"
 
 const router = Router()
@@ -38,6 +39,34 @@ router.get("/:id", (req, res) => {
   }
 
   res.json(user)
+})
+
+router.post("/register", async (req, res) => {
+  const { username, email, password } = req.body
+
+  // Validate input
+  if (!username || !email || !password) {
+    return res.status(400).json({ error: "Missing fields" })
+  }
+
+  if (password.length < 8) {
+    return res.status(400).json({ error: "Password must be at least 8 characters long" })
+  }
+
+  // Hash password
+  const hashedPassword = await bcrypt.hash(password, 10)
+
+  // Add user to DB
+  const result = db
+    .prepare(`
+      INSERT INTO users (username, email, password)
+      VALUES (?, ?, ?)
+      RETURNING *
+    `)
+    .get(username, email, hashedPassword)
+
+  // Return user
+  res.status(201).json(result)
 })
 
 export default router

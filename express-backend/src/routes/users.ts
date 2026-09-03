@@ -92,6 +92,22 @@ router.post("/login", async (req, res) => {
     return res.status(401).json({ error: "Invalid email or password" })
   }
 
+  req.session.userId = user.id
+
+  res.json(user)
+})
+
+router.get("/me", (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ error: "Not logged in" })
+  }
+
+  const user = db
+    .prepare(`
+    SELECT * FROM users WHERE id = ?
+    `)
+    .get(req.session.userId)
+
   res.json(user)
 })
 

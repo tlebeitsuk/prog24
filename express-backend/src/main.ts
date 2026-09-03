@@ -1,7 +1,16 @@
 import express from "express"
+import session from "express-session"
 import users from "./routes/users.ts"
 
 const app = express()
+
+app.use(
+  session({
+    secret: "jiajpiaF0u912opjqfjöiialwfpäoupkhjasf",
+    resave: false,
+    saveUninitialized: false,
+  }),
+)
 
 // Allow the server to read JSON from requests
 app.use(express.json())

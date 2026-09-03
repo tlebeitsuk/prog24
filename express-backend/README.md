@@ -16,13 +16,15 @@ vp run dev
 - `GET /users` – Get all users
 - `GET /users/:id` – Get a user by ID
 - `GET /users/search?name=` – Search users by username
+- `POST /users/register` - Register new user
+- `POST /users/login` - Login user
 
 ## Security improvements
 
 - [x] Prevent SQL injection with parameter placeholders
 - [x] Validate user input
 - [x] Don't return passwords from the API
-- [ ] Hash passwords
+- [x] Hash passwords
 - [ ] Add authentication
 - [ ] Protect routes that require authentication
 - [ ] Add authorization/permissions

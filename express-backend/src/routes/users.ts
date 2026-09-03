@@ -69,4 +69,30 @@ router.post("/register", async (req, res) => {
   res.status(201).json(result)
 })
 
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body
+
+  if (!email || !password) {
+    return res.status(400).json({ error: "Missing email or password" })
+  }
+
+  const user = db
+    .prepare(`
+    SELECT * FROM users WHERE email = ?
+    `)
+    .get(email)
+
+  if (!user) {
+    return res.status(401).json({ error: "Invalid email or password" })
+  }
+
+  const passwordMatches = await bcrypt.compare(password, user.password)
+
+  if (!passwordMatches) {
+    return res.status(401).json({ error: "Invalid email or password" })
+  }
+
+  res.json(user)
+})
+
 export default router

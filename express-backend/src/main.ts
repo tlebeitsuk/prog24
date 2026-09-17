@@ -7,7 +7,7 @@ import auth from "./routes/auth.ts"
 const app = express()
 
 app.use(cors({
-  origin: "http://localhost:5173", // Domains that are allowed to use this backend
+  origin: "http://localhost:3002", // Domains that are allowed to use this backend
   credentials: true // Allows cookies to be sent/received
 }))
 
@@ -37,6 +37,6 @@ app.get("/", (_req, res) => {
 app.use("/users", users)
 app.use("/auth", auth)
 
-app.listen(3000, () => {
-  console.log("⚡️ Server running at http://localhost:3000")
+app.listen(3001, () => {
+  console.log("⚡️ Server running at http://localhost:3001")
 })

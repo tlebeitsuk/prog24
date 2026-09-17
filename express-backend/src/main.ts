@@ -7,7 +7,7 @@ import auth from "./routes/auth.ts"
 const app = express()
 
 app.use(cors({
-  // origin: "mydomain.fi" // Domains that are allowed to use this backend
+  origin: "http://localhost:5173", // Domains that are allowed to use this backend
   credentials: true // Allows cookies to be sent/received
 }))
 
